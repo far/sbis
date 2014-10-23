@@ -13,6 +13,9 @@ re_link = re.compile('^https?:\/\/([^\/]+)\/(.+)$')
 re_link_file = re.compile('^.+\/([^\/]+)\/?$')
 re_htmlchar = re.compile('&.+?;')
 
+# main output directory
+OUTPUT_DIR = "output"
+
 PARSER_XPATH = {
     'lenta.ru'          : '//div[@itemprop="articleBody"]',
     'www.gazeta.ru'     : '//div[@class="text"]',
@@ -53,7 +56,6 @@ else:
     dirname = link_
     fname = 'index.txt'
 
-print "link_: {2} dirname: {0} fname: {1}".format(dirname, fname, link_)
 try:
     if not os.path.exists(dirname):
         os.makedirs(dirname)
@@ -62,13 +64,11 @@ except:
     sys.exit(0)
     
 page = requests.get(link)
-    
 if page.status_code != 200:
     print "Can't get response. Status code: {0}".format(page.status_code)
     sys.exit(0)
 
 tree = html.fromstring(page.content)
-
 text = tree.xpath(PARSER_XPATH[domain])
 if len(text) != 1:
     print "Error getting data by parser rule"
@@ -80,7 +80,7 @@ etree.strip_elements(dom_text, 'script', 'ul', 'li', 'div', 'table', 'video', wi
 
 text = etree.tostring(dom_text)
 
-# удаляем HTML символы ( &XXX; )
+# remove HTML chars ( &XXX; )
 h = HTMLParser.HTMLParser()
 for htmlchar in set(re_htmlchar.findall(text)):
     text = text.replace(htmlchar, h.unescape(htmlchar))
@@ -88,13 +88,8 @@ for htmlchar in set(re_htmlchar.findall(text)):
 text = re.sub(r'(?i)<BR\s*\/>', '\n', text)
 text = '\n'.join([ "\n".join(textwrap.wrap(line, 80, break_long_words=False, replace_whitespace=False)) for line in text.splitlines() if line.strip()!=""])
 
-with open("{0}/{1}".format(dirname, fname), "w") as f:
+with open(OUTPUT_DIR."{0}/{1}".format(dirname, fname), "w") as f:
     f.write(text.encode('utf8'))
-#print "TEXT:\n{0}".format( ("\n".join(textwrap.wrap(text, 80, break_long_words=False, replace_whitespace=False)) ).encode('utf8') )
-
-
-
-
 
 
 
