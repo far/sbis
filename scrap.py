@@ -50,10 +50,10 @@ if domain not in PARSER_XPATH:
 link_ = re.sub(r"^(?i)https?:\/\/", "", link)
 link_.rstrip("/")
 if fname.find(".") != -1:
-    dirname = link_[:-1*len(fname)]
+    dirname = OUTPUT_DIR+"/"+link_[:-1*len(fname)]
     fname = re.sub(r'\.[^\.]+', '.txt', fname)
 else:
-    dirname = link_
+    dirname = OUTPUT_DIR+"/"+link_
     fname = 'index.txt'
 
 try:
@@ -88,7 +88,7 @@ for htmlchar in set(re_htmlchar.findall(text)):
 text = re.sub(r'(?i)<BR\s*\/>', '\n', text)
 text = '\n'.join([ "\n".join(textwrap.wrap(line, 80, break_long_words=False, replace_whitespace=False)) for line in text.splitlines() if line.strip()!=""])
 
-with open(OUTPUT_DIR."{0}/{1}".format(dirname, fname), "w") as f:
+with open("{0}/{1}".format(dirname, fname), "w") as f:
     f.write(text.encode('utf8'))
 
 
