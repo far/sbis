@@ -1,0 +1,18 @@
+
+# путь до каталога с результатом
+output_dir: output
+
+# ширина обрамления текста
+wrap_width: 80
+
+# правила обработки html
+xpath: 
+  lenta.ru: '//div[@itemprop="articleBody"]'
+  www.gazeta.ru: '//div[@class="text"]'
+  rg.ru: '//div[@class="main-text"]'
+  lifenews.ru: '//div[@class="note"]'
+  www.aif.ru: '//article[@class="articl_body content_text bottom_dotted clearfix"]'
+  www.utro.ru: '//div[@class="article-txt _ga1_on_"]'
+  www.kommersant.ru: '//div[@id="divLetterBranding"]'
+
+
