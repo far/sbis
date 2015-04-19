@@ -1,9 +1,6 @@
-sbis test task
-====
+Newspapers scraper
 
-$ pip install -r requirements.txt
+Gets the news from russian online newspapers and draw them with text wrapped (80px width) on the screen. 
 
-Usage:
-$ python scrap.py LINK
-
+Configuration file: scrap.yaml
 
