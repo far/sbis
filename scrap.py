@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import textwrap
@@ -78,7 +78,7 @@ if len(text) != 1:
 
 dom_text = text[0]
 etree.strip_tags(dom_text, 'em', 'i', 'pre', 'p', 'h1', 'h2', 'h3', 'strong', 'small', 'a', 'span', 'b', etree.Comment)
-etree.strip_elements(dom_text, 'script', 'ul', 'li', 'div', 'table', 'video', with_tail=False)
+etree.strip_elements(dom_text, 'script', 'ul', 'li', 'div', 'table', 'video', 'figcaption', with_tail=False)
 text = etree.tostring(dom_text)
 
 # remove special HTML chars ( &XXX; )
@@ -96,3 +96,4 @@ text = '\n'.join(['\n'.join(textwrap.wrap(line, config['wrap_width'], break_long
 
 with open('{0}/{1}'.format(dirname, fname), 'w') as f:
     f.write(text.encode('utf8'))
+print ('%s/%s'%(dirname, fname))
